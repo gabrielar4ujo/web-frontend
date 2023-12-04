@@ -17,3 +17,12 @@ code {
   height: 10px;
   width: 100%;
 }
+
+.disable-button {
+  cursor: not-allowed;
+  background-color: gray;
+
+  &:hover {
+    background-color: gray;
+  }
+}

@@ -1,0 +1,15 @@
+.password-input-container {
+  position: relative;
+
+  & > input {
+    width: 95%;
+  }
+}
+
+.eye-icon {
+  position: absolute;
+  top: 17px;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}

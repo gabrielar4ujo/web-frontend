@@ -1,22 +1,43 @@
 import React, { useState } from 'react';
 import './index.css';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import PasswordInput from '../../components/password_input';
+import { AuthRepository } from '../../repositories/auth.repository';
 
 const LoginPage: React.FC = () => {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string | undefined>();
+  const [password, setPassword] = useState<string | undefined>();
   const [emailError, setEmailError] = useState<string>('');
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    console.log('Email: ', email);
+    console.log('Senha: ', password);
 
-  const handleSignUp = () => {};
+    // teste para navegar pra Tela Home
+    AuthRepository.persistAuth({ token: 'token_test' });
+    const param = searchParams.get('redirect');
+    if (param) {
+      navigate(param);
+    } else {
+      navigate('/');
+    }
+  };
+
+  const handleSignUp = () => {
+    navigate('/signUp');
+  };
 
   const validateEmail = (input: string): void => {
     // Expressão regular para validar o formato do e-mail
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(input)) {
+      setEmail(undefined);
       setEmailError('Por favor, insira um e-mail válido.');
     } else {
       setEmailError('');
+      setEmail(input);
     }
   };
 
@@ -27,11 +48,10 @@ const LoginPage: React.FC = () => {
         <form>
           <label htmlFor="email">E-mail:</label>
           <input
+            placeholder="email@email.com"
             type="email"
             id="email"
-            value={email}
             onChange={(e) => {
-              setEmail(e.target.value);
               // valida a cada caractere digitado se o email é valido
               validateEmail(e.target.value);
             }}
@@ -39,14 +59,14 @@ const LoginPage: React.FC = () => {
           {emailError && <p className="error-message">{emailError}</p>}
 
           <label htmlFor="password">Senha:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <PasswordInput onChange={(e) => setPassword(e.target.value)} />
 
-          <button type="button" onClick={handleLogin}>
+          <button
+            type="button"
+            onClick={handleLogin}
+            className={!email || !password ? 'disable-button' : undefined}
+            disabled={!email || !password}
+          >
             Login
           </button>
 
