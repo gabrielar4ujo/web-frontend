@@ -26,7 +26,7 @@ const LoginPage: React.FC = () => {
   };
 
   const handleSignUp = () => {
-    navigate('/signUp');
+    navigate('/sign-up');
   };
 
   const validateEmail = (input: string): void => {
