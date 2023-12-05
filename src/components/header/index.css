@@ -1,0 +1,48 @@
+.header-container {
+  background-color: #333333;
+  color: #fff;
+  padding: 10px 20px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  position: relative;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.not-active a:hover {
+  color: #007bff; 
+}
+
+.active a:hover {
+  color: #0052ff; 
+}
+
+.active a{
+  color: #007bff; 
+}
+
+.sign-out {
+  right: -10px;
+  position: absolute;
+  cursor: pointer;
+  color: #ff3333;
+
+  &:hover {
+    color: #ff2933;
+  }
+}

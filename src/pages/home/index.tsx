@@ -1,34 +1,16 @@
-import { useNavigate } from 'react-router-dom';
-import { AuthRepository } from '../../repositories/auth.repository';
+import YouTube from 'react-youtube';
+import './index.css';
 
 const HomePage = () => {
-  const navigate = useNavigate();
+  const opts = {
+    height: '700px', // Altura do player
+    width: '100%', // Largura do player
+  };
   return (
-    <div>
-      <button
-        onClick={() => {
-          AuthRepository.removeAuth();
-          navigate('/');
-        }}
-      >
-        SAIR
-      </button>
-      <button
-        onClick={() => {
-          AuthRepository.removeAuth();
-          navigate('/about');
-        }}
-      >
-        ABOUT
-      </button>
-      <button
-        onClick={() => {
-          AuthRepository.removeAuth();
-          navigate('/contact');
-        }}
-      >
-        CONTACT
-      </button>
+    <div className="home-container">
+      <div className="youtube-video">
+        <YouTube videoId={'azz8NjJvp4Y'} opts={opts} />
+      </div>
     </div>
   );
 };
