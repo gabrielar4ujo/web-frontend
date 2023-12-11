@@ -15,9 +15,10 @@ import AdsPage from './pages/ads';
 import NotFoundPage from './pages/not_found';
 import { Toaster } from 'react-hot-toast';
 import AdsFormPage from './pages/ads_form';
+import axios from 'axios';
 
 const AuthLoader = () => {
-  // se tiver usuário logado, jogar pra /
+  // se tiver usuário logado, jogar pra '/'
   if (AuthRepository.getAuth()) {
     return redirect('/');
   }
@@ -25,18 +26,27 @@ const AuthLoader = () => {
   return null;
 };
 
-const HomeLoader = ({ request }: { request: Request }) => {
-  const redirectPath = new URL(request.url).pathname;
-
-  if (redirectPath !== '/') {
-    return redirect(`/${redirectPath}`);
-  }
-
-  if (!AuthRepository.getAuth()) {
+const HomeLoader = () => {
+  const auth = AuthRepository.getAuth();
+  if (!auth) {
     return redirect('/login');
   }
 
+  axios.defaults.headers.common['Authorization'] = auth.token;
+
   return null;
+};
+
+const AdsFormLoader = async () => {
+  const { self } = AuthRepository.useLoginRepository();
+  return self()
+    .then((res) => {
+      if (!res?.admin) {
+        return redirect('/');
+      }
+      return null;
+    })
+    .catch(() => redirect('/'));
 };
 
 const router = createBrowserRouter([
@@ -64,6 +74,7 @@ const router = createBrowserRouter([
       {
         path: '/ads-form',
         element: <AdsFormPage />,
+        loader: AdsFormLoader,
       },
     ],
   },

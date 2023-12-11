@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { SelfModel } from '../domain/models/self.model';
+import { SelfEntity } from '../domain/entities/self.entity';
 
 export const AUTH_STORAGE_KEY = 'AUTH';
 
@@ -31,7 +33,17 @@ const useLoginRepository = () => {
       senha: password,
     });
   }
-  return { login };
+
+  async function self(): Promise<SelfModel | null> {
+    const res = await axios.get(`/self`);
+
+    if (res.data) {
+      return SelfModel.decoder(res.data as SelfEntity);
+    }
+
+    return null;
+  }
+  return { login, self };
 };
 
 export const AuthRepository = {

@@ -15,7 +15,7 @@ const CarCard: React.FC<CarCardProps> = ({ carInfo }) => {
       <div className="car-details">
         <h2>{titulo}</h2>
         <p>
-          <strong>Price:</strong> R$ {preco}
+          <strong>Preço:</strong> R$ {preco}
         </p>
         <p>
           <strong>Descrição:</strong> {descricao}
