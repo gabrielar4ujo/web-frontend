@@ -4,6 +4,7 @@ interface IRegisterUser {
   email: string;
   password: string;
   isAdmin: boolean;
+  name: string;
 }
 
 const useRegisterRepository = () => {
@@ -11,11 +12,13 @@ const useRegisterRepository = () => {
     email,
     password,
     isAdmin,
+    name,
   }: IRegisterUser): Promise<any> {
     return axios.post(`/register`, {
       email: email,
       senha: password,
       admin: isAdmin,
+      nome: name,
     });
   }
   return { registerUser };

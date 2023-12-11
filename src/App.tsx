@@ -14,6 +14,7 @@ import ContactUsPage from './pages/contact';
 import AdsPage from './pages/ads';
 import NotFoundPage from './pages/not_found';
 import { Toaster } from 'react-hot-toast';
+import AdsFormPage from './pages/ads_form';
 
 const AuthLoader = () => {
   // se tiver usuário logado, jogar pra /
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: '/ads',
         element: <AdsPage />,
+      },
+      {
+        path: '/ads-form',
+        element: <AdsFormPage />,
       },
     ],
   },

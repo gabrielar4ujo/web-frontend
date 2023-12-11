@@ -13,11 +13,12 @@ const AdsPage = () => {
     listAds()
       .then((res) => setAds(res!))
       .catch(() => toast.error('Ocorreu algum erro ao listar anúncios'));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="car-list-container">
-      <h1>Car List</h1>
+      <h1>Nossos Anúncios</h1>
       <div className="car-list-box ">
         <div className="car-list">
           {ads &&

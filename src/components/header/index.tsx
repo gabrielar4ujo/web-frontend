@@ -29,10 +29,13 @@ const Header = () => {
           >
             <Link to="/contact-us">Fale Conosco</Link>
           </li>
+          <li className={isCurrentPath('/ads-form') ? 'active' : 'not-active'}>
+            <Link to="/ads-form">Criar Anúncio</Link>
+          </li>
           <li
             className="sign-out"
-            onClick={() => {
-              AuthRepository.removeAuth();
+            onClick={async () => {
+              await AuthRepository.removeAuth();
               navigate('/');
             }}
           >

@@ -13,8 +13,8 @@ function getAuth(): Auth | undefined {
   return auth ? JSON.parse(auth) : undefined;
 }
 
-function removeAuth(): void {
-  localStorage.removeItem(AUTH_STORAGE_KEY);
+async function removeAuth(): Promise<void> {
+  return await localStorage.removeItem(AUTH_STORAGE_KEY);
 }
 
 export const AuthRepository = {
