@@ -1,7 +1,14 @@
+import axios from 'axios';
+
 export const AUTH_STORAGE_KEY = 'AUTH';
 
 export interface Auth {
   token: string;
+}
+
+interface ILoginUser {
+  email: string;
+  password: string;
 }
 
 function persistAuth(auth: Auth): void {
@@ -17,8 +24,19 @@ async function removeAuth(): Promise<void> {
   return await localStorage.removeItem(AUTH_STORAGE_KEY);
 }
 
+const useLoginRepository = () => {
+  async function login({ email, password }: ILoginUser) {
+    return await axios.post(`/login`, {
+      email: email,
+      senha: password,
+    });
+  }
+  return { login };
+};
+
 export const AuthRepository = {
   persistAuth,
   getAuth,
   removeAuth,
+  useLoginRepository,
 };

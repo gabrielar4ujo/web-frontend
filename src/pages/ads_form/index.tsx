@@ -122,9 +122,11 @@ const AdsFormPage: React.FC = () => {
             type="button"
             onClick={handleContactUs}
             className={
-              !title || !description || !price ? 'disable-button' : undefined
+              !title || !description || !price || !urlImage
+                ? 'disable-button'
+                : undefined
             }
-            disabled={!title || !description || !price}
+            disabled={!title || !description || !price || !urlImage}
           >
             Enviar
           </button>
