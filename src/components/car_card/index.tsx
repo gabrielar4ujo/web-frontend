@@ -1,34 +1,30 @@
 import React from 'react';
 import './index.css';
-
-interface CarInfo {
-  name: string;
-  brand: string;
-  photo: string;
-  price: number;
-  advertiser: string;
-}
+import { AdsModel } from '../../domain/models/ads.model';
 
 interface CarCardProps {
-  carInfo: CarInfo;
+  carInfo: AdsModel;
 }
 
 const CarCard: React.FC<CarCardProps> = ({ carInfo }) => {
-  const { name, brand, photo, price, advertiser } = carInfo;
+  const { descricao, preco, urlImagem, titulo, data, anunciante } = carInfo;
 
   return (
     <div className="car-card">
-      <img src={photo} alt={name} className="car-image" />
+      <img src={urlImagem} alt={urlImagem} className="car-image" />
       <div className="car-details">
-        <h2>{name}</h2>
+        <h2>{titulo}</h2>
         <p>
-          <strong>Brand:</strong> {brand}
+          <strong>Price:</strong> R$ {preco}
         </p>
         <p>
-          <strong>Price:</strong> R$ {price}
+          <strong>Descrição:</strong> {descricao}
         </p>
         <p>
-          <strong>Advertiser:</strong> {advertiser}
+          <strong>Data do Anúncio:</strong> {data}
+        </p>
+        <p>
+          <strong>Anunciante:</strong> {anunciante}
         </p>
       </div>
     </div>

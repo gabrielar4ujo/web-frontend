@@ -1,22 +1,50 @@
 import React, { useState } from 'react';
 import './index.css';
 import PasswordInput from '../../components/password_input';
+import { useRegisterRepository } from '../../repositories/user.repository';
+import { IAxiosError } from '../../repositories/util.repository';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage: React.FC = () => {
+  const [name, setName] = useState<string | undefined>();
+  const [nameError, setNameError] = useState<string | undefined>();
   const [email, setEmail] = useState<string | undefined>();
   const [password, setPassword] = useState<string | undefined>();
   const [emailError, setEmailError] = useState<string | undefined>();
   const [passwordError, setPasswordError] = useState<string | undefined>();
   const [selectedOption, setSelectedOption] = useState('admin');
+  const { registerUser } = useRegisterRepository();
+  const navigate = useNavigate();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
   };
 
   const handleSignUp = () => {
-    console.log('Email: ', email);
-    console.log('Senha: ', password);
-    console.log('Tipo de usuário: ', selectedOption);
+    registerUser({
+      email: email!,
+      password: password!,
+      isAdmin: selectedOption === 'admin',
+      name: name!,
+    })
+      .then(() => {
+        toast.success('Usuário criado com sucesso!');
+        navigate('/login');
+      })
+      .catch((result: IAxiosError) => {
+        toast.error(result.response.data['message']);
+      });
+  };
+
+  const validateName = (input: string): void => {
+    if (!input.trim().length) {
+      setName(undefined);
+      setNameError('Campo obrigatório');
+    } else {
+      setName(input);
+      setNameError('');
+    }
   };
 
   const validateEmail = (input: string): void => {
@@ -46,6 +74,17 @@ const SignUpPage: React.FC = () => {
       <div className="login-container">
         <h2>Registrar novo usuário</h2>
         <form>
+          <label htmlFor="name">Nome:</label>
+          <input
+            placeholder="Fulano Silva"
+            type="text"
+            id="Nome"
+            onChange={(e) => {
+              validateName(e.target.value);
+            }}
+          />
+          {nameError && <p className="error-message">{nameError}</p>}
+
           <label htmlFor="email">E-mail:</label>
           <input
             placeholder="email@email.com"

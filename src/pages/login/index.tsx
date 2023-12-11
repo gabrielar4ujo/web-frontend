@@ -3,6 +3,8 @@ import './index.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import PasswordInput from '../../components/password_input';
 import { AuthRepository } from '../../repositories/auth.repository';
+import { IAxiosError } from '../../repositories/util.repository';
+import toast from 'react-hot-toast';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState<string | undefined>();
@@ -10,19 +12,22 @@ const LoginPage: React.FC = () => {
   const [emailError, setEmailError] = useState<string>('');
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { login } = AuthRepository.useLoginRepository();
 
   const handleLogin = () => {
-    console.log('Email: ', email);
-    console.log('Senha: ', password);
-
-    // teste para navegar pra Tela Home
-    AuthRepository.persistAuth({ token: 'token_test' });
-    const param = searchParams.get('redirect');
-    if (param) {
-      navigate(param);
-    } else {
-      navigate('/');
-    }
+    login({ email: email!, password: password! })
+      .then((res) => {
+        AuthRepository.persistAuth({ token: res.data['token'] });
+        const param = searchParams.get('redirect');
+        if (param) {
+          navigate(param);
+        } else {
+          navigate('/');
+        }
+      })
+      .catch((res: IAxiosError) => {
+        toast.error(res.response.data['message']);
+      });
   };
 
   const handleSignUp = () => {
