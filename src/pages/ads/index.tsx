@@ -1,24 +1,29 @@
+import { useEffect, useState } from 'react';
 import CarCard from '../../components/car_card';
+import { useAdsRepository } from '../../repositories/ads.repository';
 import './index.css';
+import { AdsModel } from '../../domain/models/ads.model';
+import toast from 'react-hot-toast';
 
 const AdsPage = () => {
-  const carList = Array.from(Array(30).keys()).map(() => ({
-    name: 'Car Model Y',
-    brand: 'Brand B',
-    photo:
-      'https://media.gazetadopovo.com.br/2020/01/17155825/lamborghini-huracan-Alexander-Migl-wikimedia-commons-960x540.jpg',
-    price: 42000,
-    advertiser: 'Advertiser XYZ',
-  }));
+  const [ads, setAds] = useState<Array<AdsModel>>();
+  const { listAds } = useAdsRepository();
+
+  useEffect(() => {
+    listAds()
+      .then((res) => setAds(res!))
+      .catch(() => toast.error('Ocorreu algum erro ao listar anúncios'));
+  }, []);
 
   return (
     <div className="car-list-container">
       <h1>Car List</h1>
       <div className="car-list-box ">
         <div className="car-list">
-          {carList.map((carInfo, index) => (
-            <CarCard key={index} carInfo={carInfo} />
-          ))}
+          {ads &&
+            ads.map((carInfo, index) => (
+              <CarCard key={index} carInfo={carInfo} />
+            ))}
         </div>
       </div>
     </div>

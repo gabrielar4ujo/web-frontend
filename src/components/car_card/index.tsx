@@ -2,11 +2,9 @@ import React from 'react';
 import './index.css';
 
 interface CarInfo {
-  name: string;
-  brand: string;
-  photo: string;
-  price: number;
-  advertiser: string;
+  descricao: string;
+  preco: number;
+  urlImagem: string;
 }
 
 interface CarCardProps {
@@ -14,21 +12,18 @@ interface CarCardProps {
 }
 
 const CarCard: React.FC<CarCardProps> = ({ carInfo }) => {
-  const { name, brand, photo, price, advertiser } = carInfo;
+  const { descricao, preco, urlImagem } = carInfo;
 
   return (
     <div className="car-card">
-      <img src={photo} alt={name} className="car-image" />
+      <img src={urlImagem} alt={urlImagem} className="car-image" />
       <div className="car-details">
-        <h2>{name}</h2>
+        <h2>{'Adicionar nome'}</h2>
         <p>
-          <strong>Brand:</strong> {brand}
+          <strong>Price:</strong> R$ {preco}
         </p>
         <p>
-          <strong>Price:</strong> R$ {price}
-        </p>
-        <p>
-          <strong>Advertiser:</strong> {advertiser}
+          <strong>Descrição:</strong> {descricao}
         </p>
       </div>
     </div>

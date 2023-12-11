@@ -13,6 +13,7 @@ import AboutUsPage from './pages/about';
 import ContactUsPage from './pages/contact';
 import AdsPage from './pages/ads';
 import NotFoundPage from './pages/not_found';
+import { Toaster } from 'react-hot-toast';
 
 const AuthLoader = () => {
   // se tiver usuário logado, jogar pra /
@@ -85,6 +86,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <React.StrictMode>
+      <Toaster />
       <RouterProvider router={router} />
     </React.StrictMode>
   );

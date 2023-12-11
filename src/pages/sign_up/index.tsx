@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import './index.css';
 import PasswordInput from '../../components/password_input';
+import { useRegisterRepository } from '../../repositories/user.repository';
+import { IAxiosError } from '../../repositories/util.repository';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpPage: React.FC = () => {
   const [email, setEmail] = useState<string | undefined>();
@@ -8,15 +12,26 @@ const SignUpPage: React.FC = () => {
   const [emailError, setEmailError] = useState<string | undefined>();
   const [passwordError, setPasswordError] = useState<string | undefined>();
   const [selectedOption, setSelectedOption] = useState('admin');
+  const { registerUser } = useRegisterRepository();
+  const navigate = useNavigate();
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
   };
 
   const handleSignUp = () => {
-    console.log('Email: ', email);
-    console.log('Senha: ', password);
-    console.log('Tipo de usuário: ', selectedOption);
+    registerUser({
+      email: email!,
+      password: password!,
+      isAdmin: selectedOption === 'admin',
+    })
+      .then(() => {
+        toast.success('Usuário criado com sucesso!');
+        navigate('/login');
+      })
+      .catch((result: IAxiosError) => {
+        toast.error(result.response.data['message']);
+      });
   };
 
   const validateEmail = (input: string): void => {
