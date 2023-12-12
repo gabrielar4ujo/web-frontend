@@ -17,7 +17,7 @@ const AdsFormPage: React.FC = () => {
 
   const { createAds } = useAdsRepository();
 
-  const handleContactUs = () => {
+  const handleCreateAds = () => {
     createAds({
       descricao: description!,
       preco: price!,
@@ -62,11 +62,16 @@ const AdsFormPage: React.FC = () => {
     }
   };
 
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleCreateAds();
+  };
+
   return (
     <div className="main-container">
       <div className="contact-us-container">
         <h2>Criar Anúncio</h2>
-        <form>
+        <form onSubmit={onFormSubmit}>
           <label htmlFor="title">Título:</label>
           <input
             placeholder="Título do anúncio"
@@ -119,8 +124,7 @@ const AdsFormPage: React.FC = () => {
           <br />
 
           <button
-            type="button"
-            onClick={handleContactUs}
+            type="submit"
             className={
               !title || !description || !price || !urlImage
                 ? 'disable-button'

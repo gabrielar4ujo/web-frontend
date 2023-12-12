@@ -69,11 +69,16 @@ const SignUpPage: React.FC = () => {
     }
   };
 
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSignUp();
+  };
+
   return (
     <div className="main-container">
       <div className="login-container">
         <h2>Registrar novo usuário</h2>
-        <form>
+        <form onSubmit={onFormSubmit}>
           <label htmlFor="name">Nome:</label>
           <input
             placeholder="Fulano Silva"
@@ -131,8 +136,7 @@ const SignUpPage: React.FC = () => {
           </div>
 
           <button
-            type="button"
-            onClick={handleSignUp}
+            type="submit"
             disabled={!email || !password}
             className={!email || !password ? 'disable-button' : undefined}
           >

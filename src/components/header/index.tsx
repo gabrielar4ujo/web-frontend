@@ -60,7 +60,7 @@ const Header = () => {
             className="sign-out"
             onClick={async () => {
               await AuthRepository.removeAuth();
-              navigate('/');
+              setTimeout(() => navigate('/'));
             }}
           >
             <span>Sair</span>
