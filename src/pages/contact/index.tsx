@@ -26,8 +26,9 @@ const ContactUsPage = ({ isLogged }: { isLogged: boolean }) => {
           setEmail(res.email);
         }
       })
-      .catch();
-  });
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleContactUs = () => {
     sendEmail({
