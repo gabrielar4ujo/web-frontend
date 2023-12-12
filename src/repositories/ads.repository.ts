@@ -10,8 +10,13 @@ interface ICreateAds {
 }
 
 const useAdsRepository = () => {
-  async function listAds(): Promise<Array<AdsModel> | null> {
-    const res = await axios.get('/anuncio');
+  async function listAds(name?: string, minValue?: string, maxValue?: string): Promise<Array<AdsModel> | null> {
+    const queryParams = new URLSearchParams();
+
+    if (name) queryParams.append('name', name);
+    if (minValue) queryParams.append('minValue', minValue);
+    if (maxValue) queryParams.append('maxValue', maxValue);
+    const res = await axios.get(`/anuncio?${queryParams.toString()}`);
 
     if (res.data) {
       return (res.data as []).map((item: AdsEntity) =>
