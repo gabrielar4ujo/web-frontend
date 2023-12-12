@@ -64,12 +64,12 @@ const router = createBrowserRouter([
         element: <AboutUsPage />,
       },
       {
-        path: '/contact-us',
-        element: <ContactUsPage />,
-      },
-      {
         path: '/ads',
         element: <AdsPage />,
+      },
+      {
+        path: '/contact-us',
+        element: <ContactUsPage isLogged={true} />,
       },
       {
         path: '/ads-form',
@@ -90,6 +90,10 @@ const router = createBrowserRouter([
       {
         path: '/sign-up',
         element: <SignUpPage />,
+      },
+      {
+        path: '/contact-us-no-user',
+        element: <ContactUsPage isLogged={false} />,
       },
     ],
   },

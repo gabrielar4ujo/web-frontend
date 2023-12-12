@@ -34,6 +34,10 @@ const LoginPage: React.FC = () => {
     navigate('/sign-up');
   };
 
+  const handleContactUs = () => {
+    navigate('/contact-us-no-user');
+  };
+
   const validateEmail = (input: string): void => {
     // Expressão regular para validar o formato do e-mail
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -46,11 +50,16 @@ const LoginPage: React.FC = () => {
     }
   };
 
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
   return (
     <div className="main-container">
       <div className="login-container">
         <h2>Login</h2>
-        <form>
+        <form onSubmit={onFormSubmit}>
           <label htmlFor="email">E-mail:</label>
           <input
             placeholder="email@email.com"
@@ -67,8 +76,7 @@ const LoginPage: React.FC = () => {
           <PasswordInput onChange={(e) => setPassword(e.target.value)} />
 
           <button
-            type="button"
-            onClick={handleLogin}
+            type="submit"
             className={!email || !password ? 'disable-button' : undefined}
             disabled={!email || !password}
           >
@@ -79,6 +87,12 @@ const LoginPage: React.FC = () => {
 
           <button type="button" onClick={handleSignUp}>
             Cadastrar Conta
+          </button>
+
+          <div className="divider" />
+
+          <button type="button" onClick={handleContactUs}>
+            Entrar em Contato
           </button>
         </form>
       </div>
